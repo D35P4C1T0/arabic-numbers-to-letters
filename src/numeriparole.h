@@ -5,24 +5,13 @@ using namespace std;
 /*
 
     Il numero '1234' viene colmato degli zeri che gli manca per arrivare a
-    12 cifre, perchè la scelta è stata di arrivare fino al migliardo e fermarmi.
+    12 cifre, perchè la scelta è stata di arrivare fino al miliardo e fermarmi.
     La funzione che lo converte in un numero in parole è una e una sola, ma
     contiene in essa chiamate ad altre funzioni cuscinetto che si prendono
     la responsabilità di convertire decine e centinaia "a cascata", visto che
     i numeri in parole spesso si ripetono.
 
 */
-
-string prepare(string input) {
-  int delta = 12 - input.length();
-  // per arrivare a 12 cifre
-  string out = "";
-  for (int i = 0; i < delta; i++) {
-    out += "0";
-  }
-  out += input;
-  return out;
-}
 
 string decine(string input) {
   // input dovrebbe essere una stringa da 2 caratteri
@@ -37,7 +26,7 @@ string decine(string input) {
   string out = "[problema nelle decine]";
 
   map<string, string> map0to9{
-      {"00", "zero"},    {"01", "uno"},    {"02", "due"}, {"03", "tre"},
+      {"0", "zero"},    {"01", "uno"},    {"02", "due"}, {"03", "tre"},
       {"04", "quattro"}, {"05", "cinque"}, {"06", "sei"}, {"07", "sette"},
       {"08", "otto"},    {"09", "nove"}};
 
@@ -62,10 +51,11 @@ string decine(string input) {
   }
   if (decina != "0" && unit != "0") {
     return map20to90[decina] + map0to9["0" + unit];
-    // trenta, oppure trentasette
+    // trentasette
   }
   if (decina != "0" && unit == "0") {
     return map20to90[decina];
+    // trenta
   }
 
   return out;
@@ -166,3 +156,22 @@ string miliardi(string input) {
   }
   return out;
 }
+
+// Utils
+
+bool is_digits(const std::string &str) {
+    return str.find_first_not_of("0123456789") == std::string::npos;
+}
+
+string prepare(string input) {
+  int delta = 12 - input.length();
+  // per arrivare a 12 cifre
+  string out = "";
+  for (int i = 0; i < delta; i++) {
+    out += "0";
+  }
+  out += input;
+  return out;
+}
+
+string numberToLetter(string input) { return miliardi(prepare(input)); }

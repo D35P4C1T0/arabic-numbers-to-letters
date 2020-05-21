@@ -3,18 +3,11 @@
 #include <map>
 using namespace std;
 
-int main(int argc, char **argv) {
-  string numero = "";
-  cin >> numero;
-
-  if (numero.length() > 12) {
-    cout << "Numero troppo grande"
-         << "\n";
-    return 0;
+int main(int argc, char const *argv[]) {
+  string numero(argv[1]);
+  if (is_digits(numero)) {
+    string risultato = numberToLetter(numero);
+    printf("%s\n", risultato.c_str());
   }
-
-  numero = prepare(numero);
-  string risultato = miliardi(numero);
-  printf("%s\n", risultato.c_str());
   return 0;
 }
